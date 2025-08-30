@@ -3,6 +3,7 @@
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: 3.5rem;
 	padding: 1.5rem;
+	margin-bottom: 5rem;
 }
 
 .productWrapper {
