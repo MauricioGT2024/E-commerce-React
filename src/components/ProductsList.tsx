@@ -111,7 +111,7 @@ const ProductsList: React.FC<Props> = ({ products, onProductSelected }) => {
 										{/* Botón */}
 										<button
 											onClick={handleBuyClick}
-											className="mt-auto inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+											className="mt-auto inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-yellow-400 rounded-lg  focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
 										>
 											Comprar
 											<svg
