@@ -3,18 +3,14 @@ import type { Product } from "../types/Product";
 import Pagination from "./Pagination";
 import { ThemeToggle } from "./ThemeToggle";
 import { useProducts } from "../hooks/useProducts";
+import { Link } from "react-router-dom";
 
-interface Props {
-	products: Product[];
-	onProductSelected: (product: Product) => void;
-}
-
-const ProductsList: React.FC<Props> = ({ products, onProductSelected }) => {
+const ProductsList = () => {
 	const [filters, setFilters] = useState({
 		category: "all",
 		minPrice: 0,
 	});
-	const { loading } = useProducts();
+	const { loading, products } = useProducts();
 
 	const [productsPerPage] = useState(5);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -45,7 +41,7 @@ const ProductsList: React.FC<Props> = ({ products, onProductSelected }) => {
 
 			<ThemeToggle />
 			{loading ? (
-				<p>Cargando...</p>
+				<p className="text-center font-bold text-md">Cargando...</p>
 			) : (
 				<>
 					<div className="flex items-center justify-center gap-4 mb-4">
@@ -86,51 +82,50 @@ const ProductsList: React.FC<Props> = ({ products, onProductSelected }) => {
 						{filteredProducts
 							.slice(firstIndex, lastIndex)
 							.map((product: Product) => (
-								<div
-									onClick={() => onProductSelected(product)}
-									className="flex flex-col justify-between h-full bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700"
-								>
-									{/* Imagen */}
-									<img
-										className="rounded-t-lg w-full h-40 object-contain object-center  p-5"
-										src={product.image}
-										alt={product.title}
-									/>
+								<div className="flex flex-col justify-between h-full bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+									<Link to={`/product/${product.id}`} viewTransition>
+										{/* Imagen */}
+										<img
+											className="rounded-t-lg w-full h-40 object-contain object-center  p-5"
+											src={product.image}
+											alt={product.title}
+										/>
 
-									{/* Contenido */}
-									<div className="flex flex-col justify-between flex-1 p-4">
-										<div>
-											<h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-												{product.title.slice(0, 36)}
-											</h5>
-											<p className="mb-4 text-sm text-gray-700 dark:text-gray-400 line-clamp-5 ">
-												{product.description.slice(0, 48)}
-											</p>
-										</div>
+										{/* Contenido */}
+										<div className="flex flex-col justify-between flex-1 p-4">
+											<div>
+												<h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+													{product.title.slice(0, 36)}
+												</h5>
+												<p className="mb-4 text-sm text-gray-700 dark:text-gray-400 line-clamp-5 ">
+													{product.description.slice(0, 48)}
+												</p>
+											</div>
 
-										{/* Botón */}
-										<button
-											onClick={handleBuyClick}
-											className="mt-auto inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-yellow-400 rounded-lg  focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
-										>
-											Comprar
-											<svg
-												className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-												aria-hidden="true"
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 14 10"
+											{/* Botón */}
+											<button
+												onClick={handleBuyClick}
+												className="mt-auto inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-yellow-400 rounded-lg  focus:ring-4 focus:outline-none focus:ring-yellow-200 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
 											>
-												<path
-													stroke="currentColor"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth="2"
-													d="M1 5h12m0 0L9 1m4 4L9 9"
-												/>
-											</svg>
-										</button>
-									</div>
+												Comprar
+												<svg
+													className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+													aria-hidden="true"
+													xmlns="http://www.w3.org/2000/svg"
+													fill="none"
+													viewBox="0 0 14 10"
+												>
+													<path
+														stroke="currentColor"
+														strokeLinecap="round"
+														strokeLinejoin="round"
+														strokeWidth="2"
+														d="M1 5h12m0 0L9 1m4 4L9 9"
+													/>
+												</svg>
+											</button>
+										</div>
+									</Link>
 								</div>
 							))}
 					</div>
