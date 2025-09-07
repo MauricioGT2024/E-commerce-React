@@ -1,69 +1,54 @@
-# React + TypeScript + Vite
+# E-commerce React 🛒
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+¡Bienvenido al repositorio de mi proyecto de E-commerce en React! 🚀
 
-Currently, two official plugins are available:
+Este proyecto está en desarrollo y forma parte de mi proceso de aprendizaje como desarrollador junior. Actualmente estoy trabajando en la rama `17/09/25`, donde estoy implementando nuevas funcionalidades y mejoras.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🛠️ ¿Qué estoy haciendo?
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Aprendiendo a manejar rutas y estados en React.
+- Implementando componentes reutilizables para el catálogo de productos.
+- Integrando una API para mostrar productos dinámicamente.
+- Mejorando el diseño con estilos y responsividad.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 👀 ¿Cómo puedes ver mi avance?
+
+1. **Clona el repositorio**:
+```bash
+git clone https://github.com/MauricioGT2024/E-commerce-React.git
+```
+2. Crea una rama local a partir de la rama remota 17/09/25:
+
+```bash
+git switch --track -c entregable-1 origin/17/09/25
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. Instalar las dependencias:
+```bash
+npm install
 ```
+
+4. Iniciar el Proyecto:
+```bash
+npm run dev
+```
+
+
+## ¿Qué sigue?
+---
+- Implementar autenticación de usuarios.
+- Agregar el proceso de checkout.
+- Desarrollar la lógica del carrito de compras.
+- Migrar a SQL Server.
+- Integrar gestión de órdenes.
+---
+
+
+¡Gracias por visitar mi proyecto y acompañar mi aprendizaje! 😊
