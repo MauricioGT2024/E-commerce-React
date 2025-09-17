@@ -13,15 +13,17 @@ type CartProviderProps = {
 type CartItem = {
 	id: number;
 	quantity: number;
+	price: number; // Optional, can be used for total price calculation
 };
 
 type CartContextType = {
-	cartItems: CartItem[];
-	getItemQuantity: (id: number) => number;
-	increaseCartQuantity: (id: number) => void;
-	decreaseCartQuantity: (id: number) => void;
-	removeFromCart: (id: number) => void;
-	getTotalQuantity: () => number;
+  cartItems: CartItem[];
+  getItemQuantity: (id: number) => number;
+  increaseCartQuantity: (id: number) => void;
+  decreaseCartQuantity: (id: number) => void;
+  removeFromCart: (id: number) => void;
+  CartQuantity: () => number;
+  clearCart: () => void;
 };
 
 const CartContext = createContext({} as CartContextType);
@@ -50,8 +52,9 @@ export function CartProvider({ children }: CartProviderProps) {
 
 	function increaseCartQuantity(id: number) {
 		setCartItems((currItems) => {
-			if (currItems.find((i) => i.id === id) == null) {
-				return [...currItems, { id, quantity: 1 }];
+			const product = currItems.find((i) => i.id === id);
+			if (product == null) {
+				return [...currItems, { id, quantity: 1, price: 0 }];
 			} else {
 				return currItems.map((i) => {
 					if (i.id === id) {
@@ -84,22 +87,27 @@ export function CartProvider({ children }: CartProviderProps) {
 		setCartItems((currItems) => currItems.filter((i) => i.id !== id));
 	}
 
-	function getTotalQuantity() {
-		return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+	function CartQuantity() {
+		return cartItems.reduce((quantity, item) => item.quantity + quantity, 0);
+	}
+
+	function clearCart() {
+		setCartItems([]);
 	}
 
 	return (
-		<CartContext.Provider
-			value={{
-				cartItems,
-				getItemQuantity,
-				increaseCartQuantity,
-				decreaseCartQuantity,
-				removeFromCart,
-				getTotalQuantity,
-			}}
-		>
-			{children}
-		</CartContext.Provider>
-	);
+    <CartContext.Provider
+      value={{
+        cartItems,
+        getItemQuantity,
+        increaseCartQuantity,
+        decreaseCartQuantity,
+        removeFromCart,
+        CartQuantity,
+        clearCart,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 }
