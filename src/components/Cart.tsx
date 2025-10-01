@@ -17,7 +17,7 @@ export default function Cart() {
 
   const total = cartItems.reduce((sum, item) => {
     const product = getProductData(item.id);
-    return sum + (product?.price || 0) * item.quantity;
+    return sum + (product?.precio || 0) * item.quantity;
   }, 0);
 
   if (loading) {
@@ -61,18 +61,14 @@ export default function Cart() {
               className='flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 border-b pb-4'
             >
               <div className='flex items-center gap-4 w-full sm:w-auto'>
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className='w-20 h-20 object-contain'
-                />
+                
                 <div>
-                  <h3 className='text-lg font-medium'>{product.title}</h3>
+                  <h3 className='text-lg font-medium'>{product.nombre}</h3>
                   <p className='text-sm text-gray-500'>
-                    Precio unitario: ${product.price.toFixed(2)}
+                    Precio unitario: ${product.precio.toFixed(2)}
                   </p>
                   <p className='text-sm text-gray-500'>
-                    Subtotal: ${(product.price * item.quantity).toFixed(2)}
+                    Subtotal: ${(product.precio * item.quantity).toFixed(2)}
                   </p>
                 </div>
               </div>
@@ -93,7 +89,7 @@ export default function Cart() {
                 </button>
                 <button
                   onClick={() => removeFromCart(item.id)}
-                  className='ml-4 text-red-500 text-sm'
+                  className='ml-4 text-red-500 text-sm cursor-pointer'
                 >
                   Eliminar
                 </button>
