@@ -10,7 +10,7 @@ const ProductsList: React.FC = () => {
     categorias: "all",
     minPrice: 0,
   });
-  const { loading, products } = useProducts();
+  const { loading, products, error } = useProducts();
   const { increaseCartQuantity } = useCart();
 
   const [productsPerPage] = useState(5);
@@ -31,6 +31,10 @@ const ProductsList: React.FC = () => {
   const categoriaUnica = Array.from(
     new Set(products.map((p) => p.categorias).filter(Boolean))
   );
+
+  if (error) {
+    <p className="text-center ">Ocurrio un Error: {error}</p>
+  }
 
   return (
     <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8">

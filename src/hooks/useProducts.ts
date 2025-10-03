@@ -12,6 +12,9 @@ export function useProducts() {
     setLoading(true);
     try {
       const res = await fetch(API_URL);
+      if (!res.ok) {
+        throw new Error("Error en el fetch de datos");
+      }
       const rawData = await res.json();
       const data: Product[] = rawData.map((item: any) => ({
         ...item,
@@ -19,9 +22,10 @@ export function useProducts() {
       }));
       setProducts(data);
       setError("");
-      setLoading(false);
     } catch (error) {
       setError("Hubo un error con el fetch" + error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
