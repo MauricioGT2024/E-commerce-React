@@ -19,6 +19,12 @@ export function useProducts() {
       const data: Product[] = rawData.map((item: any) => ({
         ...item,
         activo: Boolean(item.activo),
+        // ✅ convertir precio a número real
+        precio:
+          typeof item.precio === "object" &&
+          typeof item.precio.toNumber === "function"
+            ? item.precio.toNumber()
+            : Number(item.precio),
       }));
       setProducts(data);
       setError("");

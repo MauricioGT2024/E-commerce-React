@@ -1,7 +1,7 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useProducts } from '../hooks/useProducts';
-import type { Product } from '../types/Product';
-import { useCart } from '../context/CartContext';
+import { useParams, useNavigate } from "react-router-dom";
+import { useProducts } from "../hooks/useProducts";
+import type { Product } from "../types/Product";
+import { useCart } from "../context/CartContext";
 
 const ProductDetail = () => {
   const { products, loading } = useProducts();
@@ -11,7 +11,7 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className='text-center mt-10 text-gray-500'>
+      <div className="text-center mt-10 text-gray-500">
         <p>Cargando producto...</p>
       </div>
     );
@@ -21,11 +21,11 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <div className='text-center mt-10 text-red-500'>
+      <div className="text-center mt-10 text-red-600 dark:text-red-400">
         <p>Producto no encontrado</p>
         <button
           onClick={() => navigate(-1)}
-          className='mt-4 px-4 py-2 bg-gray-300 text-gray-800 rounded'
+          className="mt-4 px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-400 dark:hover:bg-gray-600 transition"
         >
           Volver
         </button>
@@ -34,31 +34,33 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className='max-w-2xl mt-8 mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md flex flex-col md:flex-row gap-6 transition-colors duration-300'>
+    <div className="max-w-4xl mx-auto mt-8 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md flex flex-col md:flex-row gap-8">
       {/* Imagen */}
-      <div className='md:w-1/2 flex justify-center items-center'>
-       
+      <div className="md:w-1/2 flex justify-center items-center bg-gray-200 dark:bg-gray-700 rounded-lg aspect-square">
+        {/* Placeholder de imagen */}
+        <span className="text-gray-400 dark:text-gray-300 select-none">
+          Imagen
+        </span>
       </div>
 
-      {/* Detalles */}
-      <article className='md:w-1/2 flex flex-col justify-between'>
-        <div className='p-6 rounded shadow max-w-max'>
-          <h1 className='text-2xl font-bold  '>{product.nombre}</h1>
-          <p
-            className='
-    mt-4 text-gray-700 dark:text-gray-300 leading-relaxed 
-    whitespace-pre-line overflow-x-auto
-  '
-          >
+      {/* Detalles y acciones */}
+      <article className="md:w-1/2 flex flex-col justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            {product.nombre}
+          </h1>
+          <p className="mt-4 text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed">
             {product.descripcion}
+          </p>
+          <p className="mt-4 text-2xl font-semibold text-green-600">
+            ${product.precio.toFixed(2)}
           </p>
         </div>
 
-        {/* Botones */}
-        <div className='mt-6 flex space-x-4'>
+        <div className="mt-8 flex gap-4">
           <button
-            onClick={() => navigate('/', { viewTransition: true })}
-            className='px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition'
+            onClick={() => navigate(-1)}
+            className="flex-grow px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
           >
             Volver
           </button>
@@ -66,9 +68,9 @@ const ProductDetail = () => {
           <button
             onClick={() => {
               increaseCartQuantity(product.id);
-              alert('Producto añadido al carrito');
+              alert("Producto añadido al carrito");
             }}
-            className='px-4 py-2 rounded-md bg-yellow-400 text-white hover:bg-yellow-500 transition'
+            className="flex-grow px-4 py-3 rounded-md bg-yellow-400 text-white font-semibold hover:bg-yellow-500 transition"
           >
             Comprar
           </button>
