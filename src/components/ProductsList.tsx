@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import type { Product } from "../types/Product";
 import Pagination from "./Pagination";
 import { useProducts } from "../hooks/useProducts";
 import { Link } from "react-router-dom";
