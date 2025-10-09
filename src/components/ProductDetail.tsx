@@ -38,9 +38,12 @@ const ProductDetail = () => {
       {/* Imagen */}
       <div className="md:w-1/2 flex justify-center items-center bg-gray-200 dark:bg-gray-700 rounded-lg aspect-square">
         {/* Placeholder de imagen */}
-        <span className="text-gray-400 dark:text-gray-300 select-none">
-          Imagen
-        </span>
+      
+        <img
+          src={`http://localhost:3000${product.imagenUrl}`}
+          alt={product.nombre}
+          className="object-cover w-full h-full rounded-lg"
+        />
       </div>
 
       {/* Detalles y acciones */}

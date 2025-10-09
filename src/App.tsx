@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Cart from "./components/Cart";
 import Navbar from "./components/Navbar";
 import Checkout from "./components/Checkout";
+import Panel from "./components/Panel";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/panel" element={<Panel />} />
       </Routes>
     </div>
   );

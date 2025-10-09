@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Product } from "../types/Product";
 
-const API_URL = "http://localhost:3000/productos";
+export const API_URL = "http://localhost:3000";
 
 export function useProducts() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -11,20 +11,17 @@ export function useProducts() {
   const fetchProduct = async () => {
     setLoading(true);
     try {
-      const res = await fetch(API_URL);
+      const res = await fetch(`${API_URL}/productos`);
       if (!res.ok) {
         throw new Error("Error en el fetch de datos");
       }
       const rawData = await res.json();
       const data: Product[] = rawData.map((item: any) => ({
         ...item,
+        precio: parseInt(item.precio),
         activo: Boolean(item.activo),
-        // ✅ convertir precio a número real
-        precio:
-          typeof item.precio === "object" &&
-          typeof item.precio.toNumber === "function"
-            ? item.precio.toNumber()
-            : Number(item.precio),
+        descripcion: item.descripcion || "",
+        categorias: item.categorias || "",
       }));
       setProducts(data);
       setError("");

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import Pagination from "./Pagination";
-import { useProducts } from "../hooks/useProducts";
+import { API_URL, useProducts } from "../hooks/useProducts";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
@@ -124,7 +124,13 @@ const ProductsList: React.FC = () => {
               className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition overflow-hidden flex flex-col"
             >
               <Link to={`/product/${product.id}`}>
-                <div className="h-48 bg-gray-200 dark:bg-gray-700"></div>
+                <div className="h-48 bg-gray-200 dark:bg-gray-700">
+                  <img
+                    src={`${API_URL}${product.imagenUrl}`}
+                    alt={product.nombre}
+                    className="h-48 w-full object-cover"
+                  />
+                </div>
                 <div className="p-4 space-y-2">
                   <h3 className="font-semibold text-lg text-gray-900 dark:text-white line-clamp-1">
                     {product.nombre}

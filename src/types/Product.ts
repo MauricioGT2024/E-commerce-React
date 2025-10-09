@@ -5,4 +5,5 @@ export interface Product {
   activo: boolean; // BIT → boolean
   categorias: string; // VARCHAR(50) que puede ser NULL
   descripcion: string;
+  imagenUrl: string; // URL de la imagen
 }
