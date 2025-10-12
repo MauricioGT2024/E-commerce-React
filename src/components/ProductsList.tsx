@@ -126,7 +126,7 @@ const ProductsList: React.FC = () => {
               <Link to={`/product/${product.id}`}>
                 <div className="h-48 bg-gray-200 dark:bg-gray-700">
                   <img
-                    src={`${API_URL}${product.imagenUrl}`}
+                    src={product.imagenUrl || "https://via.placeholder.com/150"}
                     alt={product.nombre}
                     className="h-48 w-full object-cover"
                   />
