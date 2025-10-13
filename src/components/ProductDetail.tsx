@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useProducts } from "../hooks/useProducts";
 import type { Product } from "../types/Product";
 import { useCart } from "../context/CartContext";
+import { useMemo } from "react";
 
 const ProductDetail = () => {
   const { products, loading } = useProducts();
@@ -17,9 +18,11 @@ const ProductDetail = () => {
     );
   }
   // Buscar el producto por ID
-  const product = products.find((p: Product) => p.id.toString() === id);
+  const product = useMemo(() => {
+    return products.find((p: Product) => p.id === Number(id));
+  }, [products, id]);
 
-  if (!product) {
+  if (!loading && !product) {
     return (
       <div className="text-center mt-10 text-red-600 dark:text-red-400">
         <p>Producto no encontrado</p>
@@ -33,6 +36,14 @@ const ProductDetail = () => {
     );
   }
 
+  if (loading || !id) {
+    return (
+      <div className="text-center mt-10 text-gray-500">
+        <p>Cargando producto...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto mt-8 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md flex flex-col md:flex-row gap-8">
       {/* Imagen */}
@@ -40,8 +51,8 @@ const ProductDetail = () => {
         {/* Placeholder de imagen */}
 
         <img
-          src={product.imagenUrl || "https://via.placeholder.com/300"}
-          alt={product.nombre}
+          src={product?.imagenUrl || "https://via.placeholder.com/300"}
+          alt={product?.nombre}
           className="object-cover w-full h-full rounded-lg"
         />
       </div>
@@ -50,13 +61,13 @@ const ProductDetail = () => {
       <article className="md:w-1/2 flex flex-col justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            {product.nombre}
+            {product?.nombre}
           </h1>
           <p className="mt-4 text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed">
-            {product.descripcion}
+            {product?.descripcion}
           </p>
           <p className="mt-4 text-2xl font-semibold text-green-600">
-            ${product.precio.toFixed(2)}
+            ${product?.precio.toFixed(2)}
           </p>
         </div>
 
@@ -70,8 +81,10 @@ const ProductDetail = () => {
 
           <button
             onClick={() => {
-              increaseCartQuantity(product.id);
-              alert("Producto añadido al carrito");
+              if (product?.id) {
+                increaseCartQuantity(product.id);
+                alert("Producto añadido al carrito");
+              }
             }}
             className="flex-grow px-4 py-3 rounded-md bg-yellow-400 text-white font-semibold hover:bg-yellow-500 transition"
           >

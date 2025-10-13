@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import Pagination from "./Pagination";
-import { API_URL, useProducts } from "../hooks/useProducts";
+import { useProducts } from "../hooks/useProducts";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
@@ -9,28 +9,27 @@ const ProductsList: React.FC = () => {
     categorias: "all",
     minPrice: 0,
   });
-  const { loading, products, error } = useProducts();
+  const { products, error } = useProducts();
   const { increaseCartQuantity } = useCart();
 
   const [productsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalProducts = products.length;
-
-  const getPaginatedProducts = () => {
-    const filtered = products.filter((product) => {
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
       const matchesCategory =
         filters.categorias === "all" ||
         product.categorias === filters.categorias;
       const matchesPrice = product.precio >= filters.minPrice;
       return matchesCategory && matchesPrice;
     });
+  }, [products, filters]);
 
-    const firstIndex = (currentPage - 1) * productsPerPage;
+  const paginatedProducts = useMemo(() => {
+    const firtsIndex = (currentPage - 1) * productsPerPage;
     const lastIndex = currentPage * productsPerPage;
-
-    return filtered.slice(firstIndex, lastIndex);
-  };
+    return filteredProducts.slice(firtsIndex, lastIndex);
+  }, [filteredProducts, currentPage, productsPerPage]);
 
   const categoriaUnica = useMemo(() => {
     return Array.from(
@@ -41,14 +40,6 @@ const ProductsList: React.FC = () => {
   if (error) {
     return (
       <p className="text-center text-red-600 mt-8">Ocurrió un error: {error}</p>
-    );
-  }
-
-  {
-    !loading && getPaginatedProducts().length === 0 && (
-      <p className="text-center text-gray-500 mt-6">
-        No hay productos que coincidan con los filtros seleccionados.
-      </p>
     );
   }
 
@@ -113,12 +104,12 @@ const ProductsList: React.FC = () => {
 
       {/* 🛒 Productos */}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {getPaginatedProducts().length === 0 ? (
+        {paginatedProducts.length === 0 ? (
           <p className="text-center col-span-full text-gray-500">
             No se encontraron productos con estos filtros.
           </p>
         ) : (
-          getPaginatedProducts().map((product) => (
+          paginatedProducts.map((product) => (
             <div
               key={product.id}
               className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition overflow-hidden flex flex-col"
@@ -159,12 +150,12 @@ const ProductsList: React.FC = () => {
 
       {/* 📄 Paginación */}
       <div className="mt-10 flex justify-center">
-        {filters.categorias === "all" && (
+        {filteredProducts.length > productsPerPage && (
           <Pagination
             productsPerPage={productsPerPage}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            totalProducts={totalProducts}
+            totalProducts={filteredProducts.length}
           />
         )}
       </div>
