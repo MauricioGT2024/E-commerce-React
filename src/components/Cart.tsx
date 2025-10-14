@@ -62,7 +62,13 @@ export default function Cart() {
             >
               <div className="flex items-center gap-4 w-full sm:w-auto">
                 {/* Placeholder de imagen */}
-                <div className="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-md flex-shrink-0" />
+                <div className="w-24 h-24 rounded-md">
+                  <img
+                    src={product.imagenUrl || "https://via.placeholder.com/100"}
+                    alt={product.nombre}
+                    className="object-contain rounded-md"
+                  />
+                </div>
 
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">

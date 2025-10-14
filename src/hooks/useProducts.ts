@@ -6,7 +6,7 @@ export const API_URL = import.meta.env.VITE_API_URL || null;
 function mapApiToProduct(item: any): Product {
   return {
     ...item,
-    precio: parseInt(item.precio),
+    precio: parseFloat(item.precio),
     activo: Boolean(item.activo),
     descripcion: item.descripcion || "",
     categorias: item.categorias || "",
@@ -29,11 +29,11 @@ export function useProducts() {
       const data: Product[] = rawData.map(mapApiToProduct);
       setProducts(data);
       setError("");
+      setLoading(false);
     } catch (error: any) {
       if (error.name === "AbortError") return;
       setError("Hubo un error con el fetch: " + error.message);
     } finally {
-      setLoading(false);
     }
   };
   useEffect(() => {
@@ -44,7 +44,7 @@ export function useProducts() {
 
   return {
     products,
-    refetch:fetchProduct,
+    refetch: fetchProduct,
     error,
     loading,
   };

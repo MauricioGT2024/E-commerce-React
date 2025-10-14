@@ -9,7 +9,7 @@ const ProductsList: React.FC = () => {
     categorias: "all",
     minPrice: 0,
   });
-  const { products, error } = useProducts();
+  const { products, error, loading } = useProducts();
   const { increaseCartQuantity } = useCart();
 
   const [productsPerPage] = useState(5);
@@ -41,6 +41,13 @@ const ProductsList: React.FC = () => {
     return (
       <p className="text-center text-red-600 mt-8">Ocurrió un error: {error}</p>
     );
+  }
+
+  if (loading) {
+    return <p className="text-center mt-8">Cargando productos...</p>;
+  }
+  if (products.length === 0) {
+    return <p className="text-center mt-8">No hay productos disponibles.</p>;
   }
 
   // UI re-diseñada
@@ -104,48 +111,45 @@ const ProductsList: React.FC = () => {
 
       {/* 🛒 Productos */}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {paginatedProducts.length === 0 ? (
-          <p className="text-center col-span-full text-gray-500">
-            No se encontraron productos con estos filtros.
-          </p>
-        ) : (
-          paginatedProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition overflow-hidden flex flex-col"
-            >
-              <Link to={`/product/${product.id}`}>
-                <div className="h-48 bg-gray-200 dark:bg-gray-700">
-                  <img
-                    src={product.imagenUrl || "https://via.placeholder.com/150"}
-                    alt={product.nombre}
-                    className="h-48 w-full object-cover"
-                  />
-                </div>
-                <div className="p-4 space-y-2">
-                  <h3 className="font-semibold text-lg text-gray-900 dark:text-white line-clamp-1">
-                    {product.nombre}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                    {product.descripcion || "Sin descripción"}
-                  </p>
-                  <p className="text-xs text-gray-400">{product.categorias}</p>
-                </div>
-              </Link>
-              <div className="mt-auto px-4 py-3 flex justify-between items-center">
-                <span className="font-bold text-blue-600 dark:text-blue-400">
-                  ${product.precio.toFixed(2)}
-                </span>
-                <button
-                  onClick={() => increaseCartQuantity(product.id)}
-                  className="text-sm bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded"
-                >
-                  Comprar
-                </button>
+        {paginatedProducts.map((product) => (
+          <div
+            key={product.id}
+            className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition overflow-hidden flex flex-col"
+          >
+            <Link to={`/product/${product.id}`}>
+              <div className="h-48 bg-gray-200 dark:bg-gray-700">
+                <img
+                  src={product.imagenUrl || "https://via.placeholder.com/150"}
+                  alt={product.nombre}
+                  className="h-48 w-full object-cover"
+                />
               </div>
+              <div className="p-4 space-y-2">
+                <h3 className="font-semibold text-lg text-gray-900 dark:text-white line-clamp-1">
+                  {product.nombre}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                  {product.descripcion || "Sin descripción"}
+                </p>
+                <p className="text-xs text-gray-400">{product.categorias}</p>
+              </div>
+            </Link>
+            <div className="mt-auto px-4 py-3 flex justify-between items-center">
+              <span className="font-bold text-blue-600 dark:text-blue-400">
+                {product.precio.toLocaleString("es-AR", {
+                  style: "currency",
+                  currency: "ARS",
+                })}
+              </span>
+              <button
+                onClick={() => increaseCartQuantity(product.id)}
+                className="text-sm bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded"
+              >
+                Comprar
+              </button>
             </div>
-          ))
-        )}
+          </div>
+        ))}
       </section>
 
       {/* 📄 Paginación */}
