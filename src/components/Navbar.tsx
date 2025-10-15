@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 import { useCart } from "../context/CartContext";
 import supabase from "../lib/supabase";
@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 function Navbar() {
   const { cartItems } = useCart();
   const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getUser = async () => {
@@ -17,7 +18,7 @@ function Navbar() {
     };
     getUser();
     const { data: listener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      (_event, session) => {
         setUser(session?.user ?? null);
       }
     );
@@ -29,6 +30,7 @@ function Navbar() {
   }, []);
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    navigate("/auth/login")
   };
 
   return (

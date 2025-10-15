@@ -121,7 +121,7 @@ const ProductsList: React.FC = () => {
                 <img
                   src={product.imagenUrl || "https://via.placeholder.com/150"}
                   alt={product.nombre}
-                  className="h-48 w-full object-cover"
+                  className="h-48 w-full "
                 />
               </div>
               <div className="p-4 space-y-2">

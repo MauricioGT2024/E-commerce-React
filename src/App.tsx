@@ -7,6 +7,7 @@ import Checkout from "./components/Checkout";
 import Panel from "./components/Panel";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import PrivateRoute from "./routes/PrivatedRoute";
 
 function App() {
   return (
@@ -17,7 +18,14 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/panel" element={<Panel />} />
+        <Route
+          path="/panel"
+          element={
+            <PrivateRoute>
+              <Panel />
+            </PrivateRoute>
+          }
+        />
         <Route path="/auth/register" element={<Register />} />
         <Route path="/auth/login" element={<Login />} />
       </Routes>

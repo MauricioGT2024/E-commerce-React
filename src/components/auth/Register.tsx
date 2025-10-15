@@ -1,21 +1,41 @@
 import { useState } from "react";
-import supabase from "../../lib/supabase";
+import supabase from "../../lib/supabase"; // Ajusta la ruta si tu archivo supabase está en otro lado
+import { Link } from "react-router-dom";
 
 export default function Register() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleRegister = async () => {
+    // Validación básica
+    if (!email || !password) {
+      alert("Por favor completa todos los campos.");
+      return;
+    }
+
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
+
     setLoading(false);
+
     if (error) {
-      alert("Error al iniciar sesión: " + error.message);
+      if (error.message.includes("User already registered")) {
+        alert("Este correo ya está registrado. Intenta iniciar sesión.");
+      } else {
+        alert("Error al registrarse: " + error.message);
+      }
+      return;
+    }
+
+    if (data.user && !data.session) {
+      alert("Registro exitoso. Te enviamos un correo para verificar tu cuenta.");
     } else {
-      alert("Inicio de sesión exitoso");
+      alert("Registro exitoso.");
     }
   };
 
@@ -24,37 +44,46 @@ export default function Register() {
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
         Registrarse
       </h2>
+
       <div className="mb-4">
         <label className="block text-gray-700 dark:text-gray-300 mb-2">
           Email:
         </label>
         <input
           type="email"
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-3 py-2 border rounded-md bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
           required
         />
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-700 dark:text-gray-300 mb-2">
           Contraseña:
         </label>
         <input
           type="password"
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="w-full px-3 py-2 border rounded-md bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
           required
         />
       </div>
+
       <button
         onClick={handleRegister}
         className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         disabled={loading}
       >
-        {loading ? "Cargando..." : "Registrarse"}
+        {loading ? "Registrando..." : "Registrarse"}
       </button>
+
+      <Link to="/auth/login">
+        <p className="text-center mt-4 hover:underline text-blue-600">
+          ¿Ya tenés una cuenta? Iniciá sesión
+        </p>
+      </Link>
     </div>
   );
 }
