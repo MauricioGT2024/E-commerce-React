@@ -1,38 +1,50 @@
-import { useEffect, useState } from 'react';
-import type { Product } from '../types/Product';
+import { useEffect, useState } from "react";
+import type { Product } from "../types/Product";
 
-const API_URL = 'https://fakestoreapi.com/products';
+export const API_URL = import.meta.env.VITE_API_URL || null;
+
+function mapApiToProduct(item: any): Product {
+  return {
+    ...item,
+    precio: parseFloat(item.precio),
+    activo: Boolean(item.activo),
+    descripcion: item.descripcion || "",
+    categorias: item.categorias || "",
+  };
+}
 
 export function useProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
 
-
-
-
-
-  const fetchProduct = async () => {
+  const fetchProduct = async (signal: AbortSignal) => {
     setLoading(true);
     try {
-      const res = await fetch(API_URL);
-      const data = await res.json();
+      const res = await fetch(`${API_URL}/productos`, { signal });
+      if (!res.ok) {
+        throw new Error("Error en el fetch de datos");
+      }
+      const rawData = await res.json();
+      const data: Product[] = rawData.map(mapApiToProduct);
       setProducts(data);
-      setError('');
+      setError("");
       setLoading(false);
-    } catch (error) {
-      setError('Hubo un error con el fetch' + error);
+    } catch (error: any) {
+      if (error.name === "AbortError") return;
+      setError("Hubo un error con el fetch: " + error.message);
+    } finally {
     }
   };
   useEffect(() => {
-    fetchProduct();
+    const controller = new AbortController();
+    fetchProduct(controller.signal);
+    return () => controller.abort();
   }, []);
-
-
-  
 
   return {
     products,
+    refetch: fetchProduct,
     error,
     loading,
   };

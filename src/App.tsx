@@ -1,48 +1,34 @@
-import { useState } from 'react';
-import ProductsList from './components/ProductsList';
-import type { Product } from './types/Product';
-import ProductDetail from './components/ProductDetail';
-import { useProducts } from './hooks/useProducts';
+import ProductsList from "./components/ProductsList";
+import ProductDetail from "./components/ProductDetail";
+import { Route, Routes } from "react-router-dom";
+import Cart from "./components/Cart";
+import Navbar from "./components/Navbar";
+import Checkout from "./components/Checkout";
+import Panel from "./components/Panel";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+import PrivateRoute from "./routes/PrivatedRoute";
 
 function App() {
-  const [productSelected, setProductSelected] = useState<Product | null>(null);
-  const { products, error } = useProducts();
-  const handleProductSelected = (products: Product) => {
-    if (document.startViewTransition) {
-      document.startViewTransition(() => {
-        setProductSelected(products);
-      });
-    } else {
-      setProductSelected(products);
-    }
-  };
-
-  const handleBack = () => {
-    if (document.startViewTransition) {
-      document.startViewTransition(() => {
-        setProductSelected(null);
-      });
-    } else {
-      setProductSelected(null);
-    }
-  };
-
   return (
     <div>
-      {error ? (
-        <p>Error al cargar productos</p>
-      ) : (
-        <>
-          {productSelected ? (
-            <ProductDetail product={productSelected} onBack={handleBack} />
-          ) : (
-            <ProductsList
-              products={products}
-              onProductSelected={handleProductSelected}
-            />
-          )}
-        </>
-      )}
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<ProductsList />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route
+          path="/panel"
+          element={
+            <PrivateRoute>
+              <Panel />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/auth/register" element={<Register />} />
+        <Route path="/auth/login" element={<Login />} />
+      </Routes>
     </div>
   );
 }
