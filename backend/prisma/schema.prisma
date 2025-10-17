@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Productos {
+  id          Int     @id(map: "PK__Producto__3213E83FD03D74D8") @default(autoincrement())
+  nombre      String  @db.VarChar(100)
+  precio      Decimal @db.Decimal(10, 2)
+  activo      Boolean @default(true)
+  categorias  String? @db.VarChar(50)
+  descripcion String? @db.VarChar(255)
+  imagenUrl   String? @db.VarChar(255)
+}
