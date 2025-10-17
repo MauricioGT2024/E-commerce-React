@@ -2,7 +2,7 @@
 
 ¡Bienvenido al repositorio de mi proyecto de E-commerce en React! 🚀
 
-Este proyecto está en desarrollo y forma parte de mi proceso de aprendizaje como desarrollador junior. Actualmente estoy trabajando en la rama `17/09/25`, donde estoy implementando nuevas funcionalidades y mejoras.
+Este proyecto está en desarrollo y forma parte de mi proceso de aprendizaje como desarrollador junior. Actualmente estoy trabajando en la rama `17/10/25`, donde estoy implementando nuevas funcionalidades y mejoras.
 
 ---
 
@@ -40,14 +40,19 @@ npm install
 npm run dev
 ```
 
+## Cosas Completada
+---
+✅ Implementar autenticación de usuarios.
+✅ Agregar el proceso de checkout.
+✅ Desarrollar la lógica del carrito de compras.
+✅ Migrar a SQL Server.
+✅ Integrar gestión de órdenes.
+✅ Migracion a Prisma + supabase
+---
 
 ## ¿Qué sigue?
 ---
-- Implementar autenticación de usuarios.
-- Agregar el proceso de checkout.
-- Desarrollar la lógica del carrito de compras.
-- Migrar a SQL Server.
-- Integrar gestión de órdenes.
+Deplegar la DB con el Frontend
 ---
 
 
