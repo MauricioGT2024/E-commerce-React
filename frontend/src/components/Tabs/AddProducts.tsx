@@ -1,13 +1,21 @@
 import { useState } from "react";
 import supabase from "../../lib/supabase";
 
+type ProductoForm = {
+  nombre: string;
+  precio: number;
+  descripcion: string;
+  categorias: string;
+  imagen: File | null;
+};
+
 function AddProduct() {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<ProductoForm>({
     nombre: "",
     precio: 0,
     descripcion: "",
     categorias: "",
-    imagen: null as File | null,
+    imagen: null,
   });
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -19,6 +27,7 @@ function AddProduct() {
       ...prev,
       [name]: name === "precio" ? Number(value) : value,
     }));
+    console.log(form);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,6 +108,7 @@ function AddProduct() {
           </label>
           <input
             type="text"
+            name="nombre"
             value={form.nombre}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-all duration-200 ease-in-out hover:border-blue-400 dark:hover:border-blue-500"
@@ -110,6 +120,7 @@ function AddProduct() {
           </label>
           <input
             type="number"
+            name="precio"
             value={form.precio}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-all duration-200 ease-in-out hover:border-blue-400 dark:hover:border-blue-500"
@@ -120,6 +131,7 @@ function AddProduct() {
             Descripción:
           </label>
           <textarea
+            name="descripcion"
             value={form.descripcion}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-all duration-200 ease-in-out hover:border-blue-400 dark:hover:border-blue-500 min-h-[120px]"
@@ -131,6 +143,7 @@ function AddProduct() {
           </label>
           <input
             type="text"
+            name="categorias"
             value={form.categorias}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-all duration-200 ease-in-out hover:border-blue-400 dark:hover:border-blue-500"
