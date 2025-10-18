@@ -18,10 +18,10 @@ export function useProducts() {
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchProduct = async (signal: AbortSignal) => {
+  const fetchProduct = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/productos`, { signal });
+      const res = await fetch(`${API_URL}/productos`);
       if (!res.ok) {
         throw new Error("Error en el fetch de datos");
       }
@@ -38,7 +38,7 @@ export function useProducts() {
   };
   useEffect(() => {
     const controller = new AbortController();
-    fetchProduct(controller.signal);
+    fetchProduct();
     return () => controller.abort();
   }, []);
 
