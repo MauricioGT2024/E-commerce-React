@@ -68,7 +68,7 @@ const EditProduct = () => {
         user_id: user.user?.id,
       })
       .eq("id", editingId);
-      windows.locations.reload()
+      window.locations.reload()
     if (updateError) {
       console.error(updateError);
       alert("Error al actualizar el producto");
