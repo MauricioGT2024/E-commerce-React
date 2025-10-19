@@ -117,7 +117,7 @@ const Footer = () => {
           rel="noopener noreferrer"
           className="text-blue-500 hover:underline"
         >
-          Tu Nombre
+          Mauricio Sierra
         </a>{" "}
         ·{" "}
         <a
