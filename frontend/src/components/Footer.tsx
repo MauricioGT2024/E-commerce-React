@@ -112,7 +112,7 @@ const Footer = () => {
         reservados. <br />
         Creado por{" "}
         <a
-          href="https://github.com/tu-usuario"
+          href="https://github.com/MauricioGT2024"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-500 hover:underline"
@@ -121,7 +121,7 @@ const Footer = () => {
         </a>{" "}
         ·{" "}
         <a
-          href="https://linkedin.com/in/tu-usuario"
+          href="https://linkedin.com/in/mauricio-sierra"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-500 hover:underline"
