@@ -67,3 +67,6 @@ Gracias por tomarte el tiempo de revisar este proyecto. Fue desarrollado desde c
 
 ### Gracias a Nodo Tecnologico y Generacion T por poder abrirme sus puertas y dame sus enseñanza para mi futuro en el mundo de la programacion. me gustaria ser parte de su staff de trabajo y que sea una salida laboral para mi  
 
+---
+Link del Trello:
+https://trello.com/invite/b/68bf1d88378373e76cbabf7c/ATTIef33a3dbd0949eaab81327961b25d87d1DF617BB/proyecto-final-e-commerce
